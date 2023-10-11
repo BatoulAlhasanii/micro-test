@@ -10,8 +10,6 @@ import {showTicketRouter} from "./routes/show";
 import {currentUser} from "./middlewares/current-user";
 import {createTicketRouter} from "./routes/new";
 import {updateTicketRouter} from "./routes/update";
-import {produceMessage} from "./kafka/producer";
-import {runConsumer} from "./kafka/consumer";
 import './grpc/server';
 import {client} from "./grpc/client";
 import {YourTopicProducer} from "./events/producers/your-topic-procucer";
@@ -28,7 +26,6 @@ app.use(
 );
 
 app.use(currentUser);
-// runConsumer().catch(console.error);
 app.get('/api/tickets/produce', async (req, res) => {
     const message = 'Hello Kafka!';
     const topic = 'your_topic'; // Replace with the desired topic

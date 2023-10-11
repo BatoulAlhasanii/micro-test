@@ -2,9 +2,11 @@ import {YourTopicHandler} from "./handlers/your-topic-handler";
 import {TicketCreatedHandler} from "./handlers/ticket-created-handler";
 
 export enum Subjects {
-    YourTopic = 'your_topic',
-    TicketCreated = 'ticket:created',
+    YourTopic = 'YourTopic',
+    TicketCreated = 'TicketCreated',
 }
+
+export type EventType = Subjects.YourTopic | Subjects.TicketCreated;
 
 export interface EventDataMap {
     [Subjects.YourTopic]: { text: string };
@@ -15,9 +17,4 @@ export interface EventDataMap {
         price: number;
         userId: string;
     };
-}
-
-export interface EventHandlerMap {
-    [Subjects.YourTopic]: YourTopicHandler;
-    [Subjects.TicketCreated]: TicketCreatedHandler;
 }

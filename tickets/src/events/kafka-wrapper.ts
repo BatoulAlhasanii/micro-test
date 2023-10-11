@@ -1,11 +1,7 @@
-import { BadRequestError } from "../errors/bad-request-error";
 import {Kafka, Consumer, EachMessagePayload, Partitioners, Producer, BrokersFunction, ValueOf} from 'kafkajs';
 import {eventHandlerMap} from './map';
-import {EventDataMap, EventHandlerMap, Subjects} from "./types";
-import {Expression} from "mongoose";
+import {Subjects} from "./types";
 import {BaseEventHandler} from "./handlers/base-event-handler";
-import {YourTopicHandler} from "./handlers/your-topic-handler";
-import {TicketCreatedHandler} from "./handlers/ticket-created-handler";
 
 class KafkaWrapper {
     protected _kafka?: Kafka;
@@ -47,52 +43,24 @@ class KafkaWrapper {
 
         this._consumer = this._kafka.consumer({groupId: 'my-consumer-group'});
         await this._consumer.connect();
-        await this._consumer.subscribe({topics: ['your_topic'], fromBeginning: true});
+        await this._consumer.subscribe({topics, fromBeginning: true});
         this.subscribe()
     }
 
     private subscribe() {
         this._consumer!.run({
             eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {
-                console.log("Heloooooo from consumer")
-
-                console.log(`Received message on topic ${topic}, partition ${partition}: ${message.value}`);
                 const parsedData = this.parseMessage(message.value);
 
-                let handler;
-                switch (topic) {
-                    case Subjects.YourTopic:
-                        handler = new YourTopicHandler();
-                        break;
-                    case Subjects.TicketCreated:
-                        handler = new TicketCreatedHandler();
-                        break;
-                }
+                const subjectKey: Subjects = Subjects[topic as unknown as Subjects];
+                const classHandler: new () => BaseEventHandler<Subjects> = eventHandlerMap[subjectKey];
 
-                if (handler) {
-                    await handler.handle(parsedData); // Call the corresponding handler function
+                if (classHandler) {
+                    const handler: BaseEventHandler<Subjects> = new classHandler();
+                    handler.handle(parsedData);
                 } else {
                     console.warn(`No handler found for topic: ${topic}`);
                 }
-
-                // const indexOfS: number = Object.values(Subjects).indexOf(topic as unknown as Subjects);
-                //
-                // const subjectKey = Object.keys(Subjects)[indexOfS];
-                // console.log(subjectKey);
-                //
-                // // const subjectKey: Subjects | undefined = Subjects[topic as keyof typeof Subjects];
-                //
-                // const handler = eventHandlerMap[subjectKey];
-                // console.log("Heloo from new consumer",
-                //     eventHandlerMap[Subjects.YourTopic],
-                //     Object.keys(parsedData),
-                //     topic);
-                //
-                // if (handler) {
-                //     await new handler().handle(parsedData); // Call the corresponding handler function
-                // } else {
-                //     console.warn(`No handler found for topic: ${topic}`);
-                // }
             },
         });
     }
