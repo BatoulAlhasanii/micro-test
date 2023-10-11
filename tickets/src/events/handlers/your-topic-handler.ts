@@ -1,8 +1,8 @@
-import {BaseEventHandler} from "./base-handler";
+import {BaseEventHandler} from "./base-event-handler";
 import {Subjects, EventDataMap} from "../types";
 
-export class YourTopicHandler implements BaseEventHandler<Subjects.YourTopic> {
-    async handle(data: EventDataMap[Subjects.YourTopic]) {
-
+export class YourTopicHandler extends BaseEventHandler<Subjects.YourTopic> {
+    async handle(data: EventDataMap[Subjects.YourTopic]): Promise<void>{
+        console.log("Handling YourTopic event");
     }
 }

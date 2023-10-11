@@ -25,7 +25,7 @@ app.use(
     })
 );
 
-runConsumer().catch(console.error);
+// runConsumer().catch(console.error);
 
 app.get('/api/users/grpc', async (req, res) => {
     // client.createTodo({

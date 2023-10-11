@@ -14,7 +14,10 @@ export const runConsumer = async () => {
     await consumer.subscribe({ topic, fromBeginning: true });
 
     await consumer.run({
+
         eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {
+            console.log("helooooooo from consumer");
+
             console.log(`Received message on topic ${topic}, partition ${partition}: ${message.value}`);
         },
     });

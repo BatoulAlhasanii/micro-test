@@ -15,6 +15,5 @@ export const produceMessage = async (topic: string, message: string): Promise<Re
         messages: [{ value: message }],
     });
 
-    console.log("helooooooo from producer");
     return result[0];
 };

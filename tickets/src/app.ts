@@ -14,6 +14,8 @@ import {produceMessage} from "./kafka/producer";
 import {runConsumer} from "./kafka/consumer";
 import './grpc/server';
 import {client} from "./grpc/client";
+import {YourTopicProducer} from "./events/producers/your-topic-procucer";
+import {kafkaWrapper} from "./events/kafka-wrapper";
 
 const app = express();
 app.set('trust proxy', true);
@@ -30,7 +32,8 @@ app.use(currentUser);
 app.get('/api/tickets/produce', async (req, res) => {
     const message = 'Hello Kafka!';
     const topic = 'your_topic'; // Replace with the desired topic
-    const result = await produceMessage(topic, message);
+    // const result = await produceMessage(topic, message);
+    const result = await new YourTopicProducer(kafkaWrapper.producer).publish({text: 'Hello from new producer'});
     res.send(`Produced message: ${message}, Offset: ${result.offset}`);
 });
 

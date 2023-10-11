@@ -3,7 +3,8 @@ import {YourTopicHandler} from "./handlers/your-topic-handler";
 import {TicketCreatedHandler} from "./handlers/ticket-created-handler";
 
 
-const eventHandlerMap: EventHandlerMap = {
+export const eventHandlerMap= {
     [Subjects.TicketCreated]: TicketCreatedHandler,
+
     [Subjects.YourTopic]: YourTopicHandler,
 }
