@@ -45,7 +45,14 @@ images:
     context: ./tickets
     rebuildStrategy: always
     skipPush: true
-
+  orders:
+    image: micro-test/orders
+    tags:
+      - orders-service
+    dockerfile: ./orders/Dockerfile
+    context: ./orders
+    rebuildStrategy: always
+    skipPush: true
 # This is a list of `dev` containers that are based on the containers created by your deployments
 dev:
   auth:
@@ -72,7 +79,17 @@ dev:
 #      - url: http://ticketing.dev
     sync:
       - path: ./tickets:/app
-
+  orders:
+    imageSelector: micro-test/orders
+    logs:
+      enabled: true
+      lastLines: 100
+    #    ports:
+    #      - port: "3001"
+    #    open:
+    #      - url: http://ticketing.dev
+    sync:
+      - path: ./orders:/app
 #dev:
 #  app:
 #    # Replace the container image with this dev-optimized image (allows to skip image building during development)

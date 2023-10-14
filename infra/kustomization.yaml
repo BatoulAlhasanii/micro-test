@@ -6,3 +6,5 @@ resources:
   - ./k8s/zookeper-depl.yaml
   - ./k8s/kafka-depl.yaml
   - ./k8s/ingress-srv.yaml
+  - ./k8s/orders-depl.yaml
+  - ./k8s/orders-mongo-depl.yaml

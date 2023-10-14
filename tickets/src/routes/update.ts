@@ -6,6 +6,10 @@ import {NotFoundError} from "../errors/not-found-error";
 import {NotAuthorizedError} from "../errors/not-authorized-error";
 import {BadRequestError} from "../errors/bad-request-error";
 import {validateRequest} from "../middlewares/validate-request";
+import {TicketUpdatedProducer} from "../events/producers/ticket-updated-producer";
+import {kafkaWrapper} from "../events/kafka-wrapper";
+import {currentUser} from "../middlewares/current-user";
+
 
 const router = express.Router();
 
@@ -43,6 +47,14 @@ router.put(
         });
 
         await ticket.save();
+
+        new TicketUpdatedProducer(kafkaWrapper.producer).publish({
+            id: ticket.id,
+            price: ticket.price,
+            title: ticket.title,
+            userId: ticket.userId,
+            version: ticket.version,
+        });
 
         res.send(ticket);
     }

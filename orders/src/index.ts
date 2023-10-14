@@ -5,7 +5,7 @@ import {topics} from "./events/topics";
 
 const start = async () => {
     try {
-        await mongoose.connect('mongodb://tickets-mongo-srv:27017/tickets');
+        await mongoose.connect('mongodb://orders-mongo-srv:27017/orders');
     } catch (err) {
         console.error(err);
     }

@@ -10,7 +10,7 @@ import {showTicketRouter} from "./routes/show";
 import {currentUser} from "./middlewares/current-user";
 import {createTicketRouter} from "./routes/new";
 import {updateTicketRouter} from "./routes/update";
-import './grpc/server';
+// import './grpc/server'; //TODO remove comment which is added for test to run
 import {client} from "./grpc/client";
 import {YourTopicProducer} from "./events/producers/your-topic-procucer";
 import {kafkaWrapper} from "./events/kafka-wrapper";
