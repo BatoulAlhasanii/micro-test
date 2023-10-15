@@ -1,10 +1,12 @@
 import {Subjects} from "./types";
 import {YourTopicHandler} from "./handlers/your-topic-handler";
-import {TicketCreatedHandler} from "./handlers/ticket-created-handler";
 import {BaseEventHandler} from "./handlers/base-event-handler";
+import {OrderCreatedHandler} from "./handlers/order-created-handler";
+import {OrderCancelledHandler} from "./handlers/order-cancelled-handler";
 
 
 export const eventHandlerMap:  Partial<Record<Subjects, new () => BaseEventHandler<Subjects>>> = {
-    [Subjects.TicketCreated]: TicketCreatedHandler,
+    [Subjects.OrderCreated]: OrderCreatedHandler,
+    [Subjects.OrderCancelled]: OrderCancelledHandler,
     [Subjects.YourTopic]: YourTopicHandler,
 }

@@ -5,6 +5,10 @@ import {errorHandler} from "./middlewares/error-handler";
 import cookieSession from 'cookie-session';
 import {NotFoundError} from "./errors/not-found-error";
 import {currentUser} from "./middlewares/current-user";
+import {indexOrderRouter} from "./routes";
+import {showOrderRouter} from "./routes/show";
+import {createOrderRouter} from "./routes/new";
+import {deleteOrderRouter} from "./routes/delete";
 
 const app = express();
 app.set('trust proxy', true);
@@ -17,6 +21,11 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use(indexOrderRouter);
+app.use(createOrderRouter);
+app.use(showOrderRouter);
+app.use(deleteOrderRouter);
 
 app.get('/api/orders', (req, res) => {
     res.send("Helloo from orders service");

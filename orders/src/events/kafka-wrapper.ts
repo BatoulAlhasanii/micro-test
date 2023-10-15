@@ -1,6 +1,6 @@
 import {Kafka, Consumer, EachMessagePayload, Partitioners, Producer, BrokersFunction, ValueOf, logLevel} from 'kafkajs';
 import {eventHandlerMap} from './map';
-import {Subjects} from "./types";
+import {EventDataMap, Subjects} from "./types";
 import {BaseEventHandler} from "./handlers/base-event-handler";
 import {queueGroupName} from "./queue-group-name";
 
@@ -64,12 +64,12 @@ class KafkaWrapper {
                 const parsedData = this.parseMessage(message.value);
 
                 const subjectKey: Subjects = Subjects[topic as unknown as Subjects];
-                const classHandler: undefined | (new () => BaseEventHandler<Subjects>) = eventHandlerMap[subjectKey];
+                const classHandler: undefined | (new () => BaseEventHandler<keyof EventDataMap>) = eventHandlerMap[subjectKey];
 
                 console.log("keep receiving", message.offset);
 
                 if (classHandler) {
-                    const handler: BaseEventHandler<Subjects> = new classHandler();
+                    const handler: BaseEventHandler<keyof EventDataMap> = new classHandler();
 
                     handler.handle(parsedData);
 

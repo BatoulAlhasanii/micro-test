@@ -1,10 +1,10 @@
-import {Subjects} from "./types";
-import {YourTopicHandler} from "./handlers/your-topic-handler";
-import {TicketCreatedHandler} from "./handlers/ticket-created-handler";
+import {EventDataMap, Subjects} from "./types";
 import {BaseEventHandler} from "./handlers/base-event-handler";
+import {TicketUpdatedHandler} from "./handlers/ticket-updated-handler";
+import {TicketCreatedHandler} from "./handlers/ticket-created-handler";
 
 
-export const eventHandlerMap:  Partial<Record<Subjects, new () => BaseEventHandler<Subjects>>> = {
+export const eventHandlerMap:  Partial<Record<Subjects, new () => BaseEventHandler<keyof EventDataMap>>> = {
     [Subjects.TicketCreated]: TicketCreatedHandler,
-    [Subjects.YourTopic]: YourTopicHandler,
+    [Subjects.TicketUpdated]: TicketUpdatedHandler,
 }
