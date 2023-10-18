@@ -1,6 +1,10 @@
 resources:
   - ./k8s/auth-depl.yaml
   - ./k8s/auth-mongo-depl.yaml
+  - ./k8s/auth-mongo-pv.yaml
+  - ./k8s/auth-mongo-pvc.yaml
+  - ./k8s/auth-config.yaml
+  - ./k8s/auth-secret.yaml
   - ./k8s/tickets-depl.yaml
   - ./k8s/tickets-mongo-depl.yaml
   - ./k8s/zookeper-depl.yaml
