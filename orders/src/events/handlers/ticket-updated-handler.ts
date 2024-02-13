@@ -18,7 +18,6 @@ export class TicketUpdatedHandler extends BaseEventHandler<Subjects.TicketUpdate
         });
 
         await ticket.save();
-        //send ack
     }
 
 }

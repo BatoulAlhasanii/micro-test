@@ -27,10 +27,6 @@ app.use(createOrderRouter);
 app.use(showOrderRouter);
 app.use(deleteOrderRouter);
 
-app.get('/api/orders', (req, res) => {
-    res.send("Helloo from orders service");
-});
-
 app.get('*', (req, res) => {
     throw new NotFoundError();
 });

@@ -7,10 +7,9 @@ import {NotFoundError} from "../errors/not-found-error";
 import {BadRequestError} from "../errors/bad-request-error";
 import {Order} from "../models/order";
 import {OrderStatus} from "../types/order-status";
-import * as diagnostics_channel from "diagnostics_channel";
 import {OrderCreatedProducer} from "../events/producers/order-created-producer";
 import {kafkaWrapper} from "../events/kafka-wrapper";
-import {EventDataMap, Subjects} from "../events/types";
+import {validateRequest} from "../middlewares/validate-request";
 
 const router = express.Router();
 
@@ -24,6 +23,7 @@ router.post(
             .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
             .withMessage('TicketId must be provided'),
     ],
+    validateRequest,
     async (req: Request, res: Response) => {
         const { ticketId } = req.body;
 

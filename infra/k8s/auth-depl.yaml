@@ -16,7 +16,6 @@ spec:
         - name: auth
           image: micro-test/auth
           ports:
-            - containerPort: 50051
             - containerPort: 3000
           env:
             - name: MONGO_URI

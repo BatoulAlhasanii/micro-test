@@ -16,7 +16,6 @@ spec:
         - name: orders
           image: micro-test/orders
           ports:
-            - containerPort: 50051
             - containerPort: 3000
 ---
 apiVersion: v1

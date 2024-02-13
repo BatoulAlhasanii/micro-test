@@ -13,7 +13,5 @@ export class TicketCreatedHandler extends BaseEventHandler<Subjects.TicketCreate
         });
 
         await ticket.save();
-
-        //send ack
     }
 }

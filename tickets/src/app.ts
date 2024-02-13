@@ -1,5 +1,4 @@
-import express from 'express';
-//to handle errors thrown from async function
+import express, {Request, Response} from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import {errorHandler} from "./middlewares/error-handler";
@@ -10,10 +9,6 @@ import {showTicketRouter} from "./routes/show";
 import {currentUser} from "./middlewares/current-user";
 import {createTicketRouter} from "./routes/new";
 import {updateTicketRouter} from "./routes/update";
-// import './grpc/server'; //TODO remove comment which is added for test to run
-import {client} from "./grpc/client";
-import {YourTopicProducer} from "./events/producers/your-topic-procucer";
-import {kafkaWrapper} from "./events/kafka-wrapper";
 
 const app = express();
 app.set('trust proxy', true);
@@ -26,31 +21,13 @@ app.use(
 );
 
 app.use(currentUser);
-app.get('/api/tickets/produce', async (req, res) => {
-    const message = 'Hello Kafka!';
-    const topic = 'your_topic'; // Replace with the desired topic
-    // const result = await produceMessage(topic, message);
-    const result = await new YourTopicProducer(kafkaWrapper.producer).publish({text: 'Hello from new producer'});
-    res.send(`Produced message: ${message}, Offset: ${result.offset}`);
-});
-
-// app.get('/api/tickets/grpc', async (req, res) => {
-//     client.createTodo({
-//         id: -1,
-//         text: "todo"
-//     }, (err: any, response: any) => {
-//         console.log("Recieved from server " + JSON.stringify(response))
-//     });
-//
-//     res.send();
-// });
 
 app.use(indexTicketRouter);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 app.use(updateTicketRouter);
 
-app.get('*', (req, res) => {
+app.get('*', (req: Request, res: Response) => {
     throw new NotFoundError();
 });
 

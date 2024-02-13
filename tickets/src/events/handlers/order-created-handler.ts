@@ -17,7 +17,6 @@ export class OrderCreatedHandler extends BaseEventHandler<Subjects.OrderCreated>
 
         await ticket.save();
 
-
         await new TicketUpdatedProducer(kafkaWrapper.producer).publish({
             id: ticket.id,
             version: ticket.version,

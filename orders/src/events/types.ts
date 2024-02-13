@@ -1,7 +1,6 @@
 import {OrderStatus} from "../types/order-status";
 
 export enum Subjects {
-    YourTopic = 'YourTopic',
     TicketCreated = 'TicketCreated',
     TicketUpdated = 'TicketUpdated',
     OrderCreated = 'OrderCreated',

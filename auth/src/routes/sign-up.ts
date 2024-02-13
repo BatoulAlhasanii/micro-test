@@ -34,10 +34,9 @@ router.post('/api/users/sign-up', [
                 id: user.id,
                 email: user.email
             },
-            'jwt-key'
+            'jwt-key' //TODO
         );
 
-        // Store it on session object
         req.session = {
             jwt: userJwt
         };

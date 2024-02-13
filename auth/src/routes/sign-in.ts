@@ -39,7 +39,7 @@ router.post('/api/users/sign-in',
                 id: existingUser.id,
                 email: existingUser.email
             },
-            'jwt-key'
+            'jwt-key' //TODO
         );
 
         req.session = {

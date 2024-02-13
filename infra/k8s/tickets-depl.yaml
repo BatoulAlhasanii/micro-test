@@ -16,7 +16,6 @@ spec:
         - name: tickets
           image: micro-test/tickets
           ports:
-            - containerPort: 50051
             - containerPort: 3000
 ---
 apiVersion: v1
